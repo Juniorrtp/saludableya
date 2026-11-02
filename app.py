@@ -18,9 +18,14 @@ st.set_page_config(
 # ============================================================
 # CARGA DE DATOS
 # ============================================================
+import os
+
 @st.cache_data
 def cargar_datos():
-    df = pd.read_csv("dataset_unificado_saludableya.csv", encoding="utf-8-sig")
+    # Construye la ruta absoluta al CSV usando la ubicación de app.py
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    ruta_csv = os.path.join(base_dir, "dataset_unificado_saludableya.csv")
+    df = pd.read_csv(ruta_csv, encoding="utf-8-sig")
     df.columns = df.columns.str.strip()
     df["Fecha_Pedido"] = pd.to_datetime(df["Fecha_Pedido"])
     return df
